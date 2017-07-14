@@ -21,6 +21,7 @@
 @synthesize MainCurrency;
 @synthesize curs;
 @synthesize prices;
+@synthesize newprices;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -32,8 +33,17 @@
     //devices = @[@"iPhone", @"iPad", @"iMac"];
     curs = [NSMutableArray array];
     prices =  [NSMutableArray array];
-    MainCurrency.text = @"USD";
+    newprices = [NSMutableArray array];
+    NSLog(@"String:%@", MainCurrency.text);
     
+    if ([MainCurrency.text isEqualToString:@"Label"]) {
+        
+        NSLog(@"String:%@", MainCurrency.text);
+
+        MainCurrency.text = @"USD";
+    }
+    
+    NSLog(@"String:%@", MainCurrency.text);
     NSError *error;
     NSString *url_string = [NSString stringWithFormat: @"http://finance.yahoo.com/webservice/v1/symbols/allcurrencies/quote?format=json"];
     NSData *data = [NSData dataWithContentsOfURL: [NSURL URLWithString:url_string]];
@@ -61,6 +71,20 @@
           //  [prices addObject:price];
             
         }
+    }
+    double coef = 0.0;
+    
+    for (int i = 0; i < [prices count]; i++) {
+        NSString *current = [curs objectAtIndex:i];
+        if (current == MainCurrency.text) {
+            coef =1.0 / [[prices objectAtIndex:i] doubleValue];
+            break;
+        }
+    }
+    for (int i = 0; i < [prices count]; i++) {
+        double a =[[prices objectAtIndex:i] doubleValue] * coef;
+        
+        [newprices addObject: [NSString stringWithString: @(a).stringValue]];
     }
     
     /*
@@ -92,7 +116,7 @@
     // Configure the cell...
    // NSLog(curs[indexPath.row]);
     cell.textLabel.text = [curs objectAtIndex:indexPath.row];
-    cell.detailTextLabel.text = [prices objectAtIndex: indexPath.row];
+    cell.detailTextLabel.text = [newprices objectAtIndex: indexPath.row];
     return cell;
 }
 

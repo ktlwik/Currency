@@ -29,7 +29,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     SelectedCurrency.text = MainCurrency;
-    dataArray= [NSMutableArray array];
+    //dataArray= [NSMutableArray array];
                 
     tableCheck.delegate = self;
     tableCheck.dataSource = self;

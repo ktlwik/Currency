@@ -15,4 +15,5 @@
 
 @property (nonatomic, strong) NSMutableArray *curs;
 @property (nonatomic, strong) NSMutableArray *prices;
+@property (nonatomic, strong) NSMutableArray *newprices;
 @end
